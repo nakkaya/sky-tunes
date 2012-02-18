@@ -30,6 +30,10 @@ SubsonicRPCInterface.prototype.hex_encode = function(data) {
     return result.join('');
 }
 
+SubsonicRPCInterface.prototype.get_music_folders = function(on_success) {
+    this.make_request('rest/getMusicFolders.view', {}, on_success)
+}
+
 SubsonicRPCInterface.prototype.ping = function(on_success) {
     this.make_request('rest/ping.view', {}, on_success);
 }
@@ -57,8 +61,8 @@ var SubsonicClientUI = function() {
 
     this.draw_player();
     this.draw_sidebar();
-    this.draw_status();
     this.draw_browser();
+    this.draw_status();
 
     this.resize_main_frame()
     $(window).resize(this.resize_main_frame);
@@ -68,7 +72,18 @@ var SubsonicClientUI = function() {
 
 SubsonicClientUI.prototype.draw_browser = function() {
     $('#subsonic-browser').html(
-        ''
+        '<section id="subsonic-browser-genre" class="subsonic-browser-control">'
+      +     '<h1>Genre</h1>'
+      +     ''
+      + '</section>'
+      + '<section id="subsonic-browser-artist" class="subsonic-browser-control">'
+      +     '<h1>Artist</h1>'
+      +     ''
+      + '</section>'
+      + '<section id="subsonic-browser-album" class="subsonic-browser-control">'
+      +     '<h1>Album</h1>'
+      +     ''
+      + '</section>'
     );
 }
 
@@ -106,11 +121,24 @@ SubsonicClientUI.prototype.is_loading = function(is_loading) {
 }
 
 SubsonicClientUI.prototype.resize_main_frame = function() {
-    height = $(window).height() - ($('#subsonic-player').height() + 2);
+    height = $(window).height() - ($('#subsonic-player').height() + 2) + 'px';
     $('#subsonic-main').css({
         'height': height,
         'min-height': height
     });
+
+    width = $(window).width() - ($('#subsonic-sidebar').width() + 1) + 'px';
+    $('#subsonic-browser').css({
+        'width': width,
+        'min-width': width
+    });
+
+    lo = $('#subsonic-browser').width() - ($('.subsonic-browser-control').width() * 3)
+    if (lo > 0) {
+        $('#subsonic-browser-album').css({
+            'width': $('#subsonic-browser-album').width() + lo
+        });
+    }
 }
 
 $('document').ready(function() { new SubsonicClient() });
