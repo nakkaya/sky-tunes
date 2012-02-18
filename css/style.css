@@ -129,7 +129,9 @@ section.subsonic-browser-control h1 {
     border-right: 1px solid #555;
     border-bottom: 1px solid #555;
 
-    font-size: 0.8em;
-    font-weight: 400;
+    padding: 1px 0;
+
+    font-size: 0.75em;
+    font-weight: bold;
     text-align: center;
 }
