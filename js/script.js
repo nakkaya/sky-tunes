@@ -136,7 +136,7 @@ SubsonicClientUI.prototype.resize_main_frame = function() {
     lo = $('#subsonic-browser').width() - ($('.subsonic-browser-control').width() * 3)
     if (lo > 0) {
         $('#subsonic-browser-album').css({
-            'width': $('#subsonic-browser-album').width() + lo
+            'width': $('#subsonic-browser-artist').width() + lo + 'px'
         });
     }
 }

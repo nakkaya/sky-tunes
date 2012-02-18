@@ -120,6 +120,10 @@ section.subsonic-browser-control {
     clear: none;
 }
 
+section.subsonic-browser-control:last-child h1 {
+    border-right: none;
+}
+
 section.subsonic-browser-control h1 {
     background: #cccccc -webkit-linear-gradient(top, #dbdbdb, #bbb);
     border-right: 1px solid #555;
