@@ -58,7 +58,9 @@ section#loading-overlay section * {
 }
 
 section#subsonic-player {
-    height: 74px;
+    height: 52px;
+
+    padding: 11px 22px;
 
     background: #969596 -webkit-linear-gradient(top, #c5c5c4, #969596);
     border-top: 1px solid #e2e2e2;
@@ -66,18 +68,59 @@ section#subsonic-player {
 }
 
 section#subsonic-player ul {
-    margin: 11px 22px;
+    height: 100%;
+
+    float: left;
+    margin: 0;
     padding: 0;
 
     list-style-type: none;
 }
 
+
 section#subsonic-player ul li {
     display: inline;
 }
 
-section#subsonic-player ul li:nth-child(2n) a {
-    padding-top: 50px;
+ul#subsonic-playback-controls li {
+    width: 31px;
+    height: 32px;
+
+    display: block !important;
+    float: left;
+    margin: 10px 2px 0 !important;
+}
+
+ul#subsonic-playback-controls li:nth-child(2) {
+    width: 37px;
+    height: 38px;
+
+    margin-top: 7px !important;
+}
+
+section#subsonic-activities {
+    width: 300px;
+    height: 100%;
+
+    float: left;
+    margin-left: 30px;
+
+    background: #f1f4e6;
+
+    -webkit-border-radius: 4px;
+
+    font-size: 0.8em;
+}
+
+
+section#subsonic-activities ul, section#subsonic-activities ul li {
+    width: 100%;
+
+    text-align: center;
+}
+
+section#subsonic-activities ul li:first-child {
+    margin-top: 18px;
 }
 
 section#subsonic-sidebar {
