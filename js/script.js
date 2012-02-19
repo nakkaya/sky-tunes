@@ -1,22 +1,4 @@
-var SubsonicClient = function() {
-    if (arguments.callee._singletonInstance)
-        return arguments.callee._singletonInstance;
-    arguments.callee._singletonInstance = this;
-
-    this.api = new SubsonicRPCInterface();
-    this.ui  = new SubsonicClientUI();
-}
-
-var SubsonicRPCInterface = function() {
-    this.respond_with = 'xml';
-    this.base_url     = '';
-    this.username     = '';
-    this.password     = 'enc:' + this.hex_encode('');
-    this.client_id    = 'skyTunes';
-    this.version      = '1.7.0';
-}
-
-SubsonicRPCInterface.prototype.hex_encode = function(data) {
+function hex_encode(data) {
     b16_digits = '0123456789abcdef';
     b16_map = [];
     result  = [];
@@ -28,6 +10,26 @@ SubsonicRPCInterface.prototype.hex_encode = function(data) {
         result[i] = b16_map[data.charCodeAt(i)];
 
     return result.join('');
+}
+
+var SubsonicClient = function(base_url, username, password) {
+    if (arguments.callee._singletonInstance)
+        return arguments.callee._singletonInstance;
+    arguments.callee._singletonInstance = this;
+
+    this.api = new SubsonicRPCInterface(base_url, username, password);
+    this.ui  = new SubsonicClientUI();
+
+    return this;
+}
+
+var SubsonicRPCInterface = function(base_url, username, password) {
+    this.respond_with = 'xml';
+    this.base_url     = base_url;
+    this.username     = username;
+    this.password     = 'enc:' + password;
+    this.client_id    = 'skyTunes';
+    this.version      = '1.7.0';
 }
 
 SubsonicRPCInterface.prototype.get_music_folders = function(on_success) {
@@ -93,15 +95,15 @@ SubsonicClientUI.prototype.draw_browser = function() {
     $('#subsonic-browser').html(
         '<section id="subsonic-browser-genre" class="subsonic-browser-control">'
       +     '<h1>Genre</h1>'
-      +     ''
+      +     '<ul></ul>'
       + '</section>'
       + '<section id="subsonic-browser-artist" class="subsonic-browser-control">'
       +     '<h1>Artist</h1>'
-      +     ''
+      +     '<ul></ul>'
       + '</section>'
       + '<section id="subsonic-browser-album" class="subsonic-browser-control">'
       +     '<h1>Album</h1>'
-      +     ''
+      +     '<ul></ul>'
       + '</section>'
     );
 }
@@ -113,13 +115,11 @@ SubsonicClientUI.prototype.draw_folders = function() {
 
     SubsonicClient().api.get_music_folders(function(folders) {
         view = $('#subsonic-folders');
-        console.log(folders);
 
         if ($(folders).length > 0)
             view.html('');
 
         $.each(folders, function(idx, value) {
-            console.log(idx, value);
             view.append('<li id="subsonic-folder-"' + idx + '>' + value + '</li>');
         });
     });
@@ -181,5 +181,3 @@ SubsonicClientUI.prototype.resize_main_frame = function() {
         });
     }
 }
-
-$('document').ready(function() { new SubsonicClient() });
