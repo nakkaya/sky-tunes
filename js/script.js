@@ -69,6 +69,8 @@ SubsonicRPCInterface.prototype.make_request = function(path, params, on_success)
 var SubsonicClientUI = function(root) {
     this.root = root
 
+    this.draw_root();
+
     $(root).append('<section id="subsonic-player"></section>')
                          .append('<section id="subsonic-main"></section>');
     $('#subsonic-main').append('<section id="subsonic-sidebar"></section>')
@@ -86,6 +88,23 @@ var SubsonicClientUI = function(root) {
     $(window).resize(this.resize_main_frame);
 
     this.is_loading(false);
+}
+
+SubsonicClientUI.prototype.draw_root = function() {
+    $(this.root).html(
+        '<div class="vertical-center">'
+      +     '<div class="horizontal-center">'
+      +         '<section id="loading-overlay">'
+      +             '<img class="float-left" src="img/loading.gif" alt="">'
+      +             '<section class="float-left">'
+      +                 '<h1>Loading</h1>'
+      +                 '<p>Please wait...</p>'
+      +             '</section>'
+      +         '</section>'
+      +     '</div>'
+      + '</div>'
+    );
+
 }
 
 SubsonicClientUI.prototype.draw_activities = function() {
