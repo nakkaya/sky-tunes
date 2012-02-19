@@ -1,4 +1,4 @@
-var SubsonicClient = function(){
+var SubsonicClient = function() {
     if (arguments.callee._singletonInstance)
         return arguments.callee._singletonInstance;
     arguments.callee._singletonInstance = this;
@@ -132,7 +132,7 @@ SubsonicClientUI.prototype.is_loading = function(is_loading) {
 }
 
 SubsonicClientUI.prototype.resize_main_frame = function() {
-    height = $(window).height() - ($('#subsonic-player').height() + 2) + 'px';
+    height = $(window).height() - ($('#subsonic-player').height() + 24) + 'px';
     $('#subsonic-main').css({
         'height': height,
         'min-height': height
