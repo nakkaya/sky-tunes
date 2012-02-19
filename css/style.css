@@ -1,3 +1,10 @@
+/*
+ * SkyTunes
+ * A HTML/CSS/JS Subsonic client.
+ *
+ * Copyright (c) 2012 Luke Carrier
+ */
+
 a, a:active, a:visited {
     color: #000;
     text-decoration: none;

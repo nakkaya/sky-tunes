@@ -1,3 +1,10 @@
+/*
+ * SkyTunes
+ * A HTML/CSS/JS Subsonic client.
+ *
+ * Copyright (c) 2012 Luke Carrier
+ */
+
 function hex_encode(data) {
     b16_digits = '0123456789abcdef';
     b16_map = [];
