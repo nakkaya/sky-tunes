@@ -31,7 +31,15 @@ SubsonicRPCInterface.prototype.hex_encode = function(data) {
 }
 
 SubsonicRPCInterface.prototype.get_music_folders = function(on_success) {
-    this.make_request('rest/getMusicFolders.view', {}, on_success)
+    this.make_request('rest/getMusicFolders.view', {}, function(result) {
+
+        folders = {}
+        $(result).find('musicFolders').find('musicFolder').each(function() {
+            folders[$(this).attr('id')] = $(this).attr('name');
+        });
+
+        on_success(folders);
+    });
 }
 
 SubsonicRPCInterface.prototype.ping = function(on_success) {
@@ -64,6 +72,7 @@ var SubsonicClientUI = function() {
     this.draw_browser();
 
     this.draw_activities();
+    this.draw_folders();
     this.draw_status();
 
     this.resize_main_frame()
@@ -97,6 +106,25 @@ SubsonicClientUI.prototype.draw_browser = function() {
     );
 }
 
+SubsonicClientUI.prototype.draw_folders = function() {
+    $('#subsonic-folders').html(
+        '<li class="disabled">None</li>'
+    );
+
+    SubsonicClient().api.get_music_folders(function(folders) {
+        view = $('#subsonic-folders');
+        console.log(folders);
+
+        if ($(folders).length > 0)
+            view.html('');
+
+        $.each(folders, function(idx, value) {
+            console.log(idx, value);
+            view.append('<li id="subsonic-folder-"' + idx + '>' + value + '</li>');
+        });
+    });
+}
+
 SubsonicClientUI.prototype.draw_player = function() {
     $('#subsonic-player').html(
         '<ul id="subsonic-playback-controls">'
@@ -110,7 +138,9 @@ SubsonicClientUI.prototype.draw_player = function() {
 
 SubsonicClientUI.prototype.draw_sidebar = function() {
     $('#subsonic-sidebar').html(
-        '<h1>Server status</h1>'
+        '<h1>Folders</h1>'
+      + '<ul id="subsonic-folders"></ul>'
+      + '<h1>Server status</h1>'
       + '<p id="subsonic-status">Unknown</p>'
     );
 }

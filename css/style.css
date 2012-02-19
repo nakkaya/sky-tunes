@@ -112,7 +112,6 @@ section#subsonic-activities {
     font-size: 0.8em;
 }
 
-
 section#subsonic-activities ul, section#subsonic-activities ul li {
     width: 100%;
 
@@ -136,7 +135,7 @@ section#subsonic-sidebar {
     font-size: 0.8em;
 }
 
-section#subsonic-sidebar * {
+section#subsonic-sidebar > * {
     padding: 3px 3px 3px 22px;
 }
 
@@ -147,6 +146,24 @@ section#subsonic-sidebar h1 {
     font-size: 1.0em;
     font-weight: bold;
     text-transform: uppercase;
+}
+
+section#subsonic-sidebar ul {
+    margin: 0;
+}
+
+section#subsonic-sidebar ul li {
+    height: 18px;
+
+    margin: 0 0 0 18px;
+}
+
+section#subsonic-sidebar ul li.disabled {
+    color: #394351;
+}
+
+ul#subsonic-folders li {
+    list-style-image: url(../img/folder.png);
 }
 
 section#subsonic-browser {
