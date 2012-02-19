@@ -26,7 +26,7 @@ SubsonicRPCInterface.prototype.hex_encode = function(data) {
 
     for (var i=0; i<data.length; i++)
         result[i] = b16_map[data.charCodeAt(i)];
-    
+
     return result.join('');
 }
 
@@ -62,12 +62,22 @@ var SubsonicClientUI = function() {
     this.draw_player();
     this.draw_sidebar();
     this.draw_browser();
+
+    this.draw_activities();
     this.draw_status();
 
     this.resize_main_frame()
     $(window).resize(this.resize_main_frame);
 
     this.is_loading(false);
+}
+
+SubsonicClientUI.prototype.draw_activities = function() {
+    $('#subsonic-activities').html(
+        '<ul>'
+      +     '<li>Idle</li>'
+      + '</ul>'
+    );
 }
 
 SubsonicClientUI.prototype.draw_browser = function() {
@@ -89,11 +99,12 @@ SubsonicClientUI.prototype.draw_browser = function() {
 
 SubsonicClientUI.prototype.draw_player = function() {
     $('#subsonic-player').html(
-        '<ul>'
+        '<ul id="subsonic-playback-controls">'
       +     '<li><a href="#" id="previous"><img src="img/previous.png"></a></li>'
       +     '<li><a href="#" id="play"><img src="img/play.png"></a></li>'
       +     '<li><a href="#" id="next"><img src="img/next.png"></a></li>'
       + '</ul>'
+      + '<section id="subsonic-activities"></section>'
     );
 }
 
