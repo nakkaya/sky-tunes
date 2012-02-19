@@ -12,13 +12,16 @@ function hex_encode(data) {
     return result.join('');
 }
 
-var SubsonicClient = function(base_url, username, password) {
+var SubsonicClient = function(base_url, username, password, root) {
     if (arguments.callee._singletonInstance)
         return arguments.callee._singletonInstance;
     arguments.callee._singletonInstance = this;
 
+    if (typeof root == "undefined")
+        root = '#subsonic-client'
+
     this.api = new SubsonicRPCInterface(base_url, username, password);
-    this.ui  = new SubsonicClientUI();
+    this.ui  = new SubsonicClientUI(root);
 
     return this;
 }
@@ -63,8 +66,10 @@ SubsonicRPCInterface.prototype.make_request = function(path, params, on_success)
     $.ajax(url, {'success': on_success});
 }
 
-var SubsonicClientUI = function() {
-    $('#subsonic-client').append('<section id="subsonic-player"></section>')
+var SubsonicClientUI = function(root) {
+    this.root = root
+
+    $(root).append('<section id="subsonic-player"></section>')
                          .append('<section id="subsonic-main"></section>');
     $('#subsonic-main').append('<section id="subsonic-sidebar"></section>')
                        .append('<section id="subsonic-browser"></section>');
