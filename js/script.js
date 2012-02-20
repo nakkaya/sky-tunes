@@ -79,7 +79,7 @@ var SubsonicClientUI = function(root) {
     this.draw_root();
 
     $(root).append('<section id="subsonic-player"></section>')
-                         .append('<section id="subsonic-main"></section>');
+           .append('<section id="subsonic-main"></section>');
     $('#subsonic-main').append('<section id="subsonic-sidebar"></section>')
                        .append('<section id="subsonic-browser"></section>');
 
