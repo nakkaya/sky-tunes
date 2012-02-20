@@ -181,10 +181,33 @@ section#subsonic-browser {
 }
 
 section.subsonic-browser-control {
-    width: 33%;
+    width: 33%; /* the remainder is handled dynamically by *
+                 *    SubsonicClientUI.resize_main_frame() */
 
     float: left;
     clear: none;
+}
+
+section.subsonic-browser-control ul {
+    height: 150px;
+
+    display: block;
+    margin: 0;
+    padding: 0;
+
+    overflow: auto;
+}
+
+section.subsonic-browser-control ul li {
+    padding: 3px;
+
+    list-style-type: none;
+
+    font-size: 0.8em;
+}
+
+section.subsonic-browser-control ul li:nth-child(2n + 1) {
+    background: #f1f4f9;
 }
 
 section.subsonic-browser-control:last-child h1 {
@@ -192,7 +215,7 @@ section.subsonic-browser-control:last-child h1 {
 }
 
 section.subsonic-browser-control h1 {
-    background: #cccccc -webkit-linear-gradient(top, #dbdbdb, #bbb);
+    background: #ccc -webkit-linear-gradient(top, #dbdbdb, #bbb);
     border-right: 1px solid #555;
     border-bottom: 1px solid #555;
 

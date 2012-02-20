@@ -42,6 +42,20 @@ var SubsonicRPCInterface = function(base_url, username, password) {
     this.version      = '1.7.0';
 }
 
+SubsonicRPCInterface.prototype.get_indexes = function(on_success) {
+    this.make_request('rest/getIndexes.view', {}, function(result) {
+
+        indexes = {};
+        $(result).find('indexes').find('index').each(function() {
+            $(this).find('artist').each(function() {
+                indexes[$(this).attr('id')] = $(this).attr('name');
+            });
+        });
+
+        on_success(indexes);
+    });
+}
+
 SubsonicRPCInterface.prototype.get_music_folders = function(on_success) {
     this.make_request('rest/getMusicFolders.view', {}, function(result) {
 
@@ -78,6 +92,8 @@ var SubsonicClientUI = function(root) {
 
     this.draw_root();
 
+    this.is_loading(true);
+
     $(root).append('<section id="subsonic-player"></section>')
            .append('<section id="subsonic-main"></section>');
     $('#subsonic-main').append('<section id="subsonic-sidebar"></section>')
@@ -86,6 +102,8 @@ var SubsonicClientUI = function(root) {
     this.draw_player();
     this.draw_sidebar();
     this.draw_browser();
+
+    this.draw_browser_genres();
 
     this.draw_activities();
     this.draw_folders();
@@ -137,6 +155,17 @@ SubsonicClientUI.prototype.draw_browser = function() {
       +     '<ul></ul>'
       + '</section>'
     );
+}
+
+SubsonicClientUI.prototype.draw_browser_genres = function() {
+    SubsonicClient().api.get_indexes(function(indexes) {
+        view = $('#subsonic-browser-genre > ul');
+        view.html('');
+
+        $.each(indexes, function(idx, value) {
+            view.append('<li id="subsonic-genre-' + idx + '">' + value + '</li>');
+        });
+    });
 }
 
 SubsonicClientUI.prototype.draw_folders = function() {
